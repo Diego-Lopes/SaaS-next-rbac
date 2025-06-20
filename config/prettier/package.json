@@ -1,7 +1,7 @@
 {
   "name": "@saas/prettier",
   "description": "Prettier configuration for the Next.js SaaS RBAC project",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "index.mjs",
   "private": true,
   "devDependencies": {
