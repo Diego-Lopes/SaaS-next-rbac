@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
@@ -28,6 +29,19 @@ export async function createAccount(app: FastifyInstance) {
         typeof createAccountBodySchema
       >
 
+      /**
+       * Verificar se o domínio do email é de uma organização existente
+       * se sim, adicioná-lo automáticamente a essa organização.
+       */
+      const [, domain] = email.split('@')
+
+      const autoJoinOrganization = await prisma.organization.findFirst({
+        where: {
+          domain,
+          shouldAttachUsersByDomain: true,
+        },
+      })
+
       const userWithSameEmail = await prisma.user.findUnique({
         where: { email },
       })
@@ -45,6 +59,14 @@ export async function createAccount(app: FastifyInstance) {
           name,
           email,
           passwordHash,
+          // prisma permite fazer encadeamento de ação
+          member_on: autoJoinOrganization // member_on é um relacionamento
+            ? {
+              create: {
+                organizationId: autoJoinOrganization.id,
+              },
+            }
+            : undefined,
         },
       })
 
