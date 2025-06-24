@@ -13,6 +13,7 @@ import {
 } from 'fastify-zod-openapi'
 import { ZodOpenApiVersion } from 'zod-openapi'
 
+import { errorHandler } from './error-handler'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 import { createAccount } from './routes/auth/create-account'
 import { getProfile } from './routes/auth/get-profile'
@@ -40,6 +41,9 @@ app.register(fastifySwagger, {
   transform: fastifyZodOpenApiTransform,
   transformObject: fastifyZodOpenApiTransformObject,
 })
+
+// adicionando error handler
+app.setErrorHandler(errorHandler)
 
 // Viabilizando uma interface para ver o swagger
 app.register(fastifySwaggerUI, {
