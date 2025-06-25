@@ -2,6 +2,7 @@ import fastifyCors from '@fastify/cors'
 import fastifyjwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
+import { env } from '@saas/env'
 import { fastify } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import {
@@ -40,6 +41,15 @@ app.register(fastifySwagger, {
       version: '1.0.0',
     },
     openapi: '3.0.3' satisfies ZodOpenApiVersion,
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   transform: fastifyZodOpenApiTransform,
   transformObject: fastifyZodOpenApiTransformObject,
@@ -58,7 +68,7 @@ app.register(fastifyCors)
 
 // registrando token jwt
 app.register(fastifyjwt, {
-  secret: 'Diegones',
+  secret: env.JWT_SECRET,
 })
 
 // registrando as rotas
@@ -69,6 +79,8 @@ app.register(requestPasswordRecorver)
 app.register(resetPassword)
 app.register(authenticateWithGithub)
 
-app.listen({ port: 3333 }).then(() => {
-  console.log('Server is running on port http://localhost:3333')
+app.listen({ port: env.SERVER_PORT }).then(() => {
+  console.log(
+    `🎉 Server is running on port http://localhost:${env.SERVER_PORT} 🔥🔥`,
+  )
 })
