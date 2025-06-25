@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const inviteSubject = z.tuple([
   z.union([
@@ -7,7 +7,7 @@ export const inviteSubject = z.tuple([
     z.literal('create'),
     z.literal('delete'), // revoke apagar um convite que já foi enviado.
   ]),
-  z.literal('Invite')
+  z.literal('Invite'),
 ])
 
 export type InviteSubject = z.infer<typeof inviteSubject>

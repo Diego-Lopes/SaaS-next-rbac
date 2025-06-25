@@ -1,7 +1,8 @@
-//definindo as ações por tipo de role.
+// definindo as ações por tipo de role.
 
-import { z } from "zod"
-import { projectSchema } from "../models/project"
+import { z } from 'zod'
+
+import { projectSchema } from '../models/project'
 /**
  * tuplas é quando array tem duas posições
  * nesse array na primeira posição fica todas as ações que pode ser feita, na segunda é o nome da subject.
@@ -14,6 +15,6 @@ export const projectSubject = z.tuple([
     z.literal('update'),
     z.literal('delete'),
   ]),
-  z.union([z.literal('Project'), projectSchema])
+  z.union([z.literal('Project'), projectSchema]),
 ])
 export type ProjectSubject = z.infer<typeof projectSubject>

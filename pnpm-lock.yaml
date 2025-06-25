@@ -104,6 +104,25 @@ importers:
       '@casl/ability':
         specifier: ^6.7.3
         version: 6.7.3
+      zod:
+        specifier: ^3.25.67
+        version: 3.25.67
+    devDependencies:
+      '@saas/eslint-config':
+        specifier: workspace:^
+        version: link:../../config/eslint-config
+      '@saas/prettier':
+        specifier: workspace:^
+        version: link:../../config/prettier
+      '@saas/tsconfig':
+        specifier: workspace:^
+        version: link:../../config/typescript-config
+
+  packages/env:
+    dependencies:
+      '@casl/ability':
+        specifier: ^6.7.3
+        version: 6.7.3
     devDependencies:
       '@saas/eslint-config':
         specifier: workspace:^
