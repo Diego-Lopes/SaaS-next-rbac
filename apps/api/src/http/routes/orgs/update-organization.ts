@@ -34,9 +34,7 @@ export async function updateOrganization(app: FastifyInstance) {
           body: updateOrganizatioSchema,
           params: paramsOrganizationSchema,
           response: {
-            204: z.object({
-              organizationId: z.string().uuid(),
-            }),
+            204: z.null(),
           },
         },
       },
