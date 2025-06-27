@@ -18,6 +18,7 @@ import { userSubject } from './subjects/user'
 export * from './models/organization'
 export * from './models/project'
 export * from './models/user'
+export * from './roles'
 
 const appAbilitySchema = z.union([
   projectSubject,
@@ -46,11 +47,16 @@ export function defineAbilityFor(user: User) {
   // caso contrario passamos o role para a funcao de permissão
   permission[user.role](user, builder)
 
+  // estamos usando esse objeto para definir as regras de permissão do usuário e usamos no .bind() logo abaixo.
   const ability = builder.build({
     detectSubjectType(subject) {
       return subject.__typename // estamos dizendo ao casl qual é a subject do projeto da models project.ts
     },
   })
+
+  // quando desestruturamos o ability, ele perde a referência do this para corrigir usamos .bind() que significa setar para sempre algo.
+  ability.can = ability.can.bind(ability)
+  ability.cannot = ability.cannot.bind(ability)
 
   return ability
 }
