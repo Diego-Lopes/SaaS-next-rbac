@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { useFormState } from '@/hook/use-form-state'
 
+import { signInWithGithub } from '../action'
 import { signInWithEmailAndPassword } from './actions'
 
 export function SignInForm() {
@@ -34,7 +35,7 @@ export function SignInForm() {
   )
 
   return (
-    <>
+    <div className="space-y-4">
       <form onSubmit={handleSubmit} className="space-y-4">
         {success === false && message && (
           <Alert variant={'destructive'}>
@@ -80,9 +81,9 @@ export function SignInForm() {
         <Button variant={'link'} className="w-full" asChild size={'sm'}>
           <Link href={'/auth/sign-up'}>Create new account</Link>
         </Button>
-
-        <Separator />
-
+      </form>
+      <Separator />
+      <form action={signInWithGithub}>
         <Button
           variant={'outline'}
           type="submit"
@@ -103,6 +104,6 @@ export function SignInForm() {
           Sign in with GitHub
         </Button>
       </form>
-    </>
+    </div>
   )
 }
