@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation'
 
-import { isAuthticated } from '@/auth/auth'
+import { isAuthenticated } from '@/auth/auth'
 
 export default async function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  if (await isAuthticated()) {
+  if (await isAuthenticated()) {
     // redirecionando caso tiver token nos cookies!!!
     redirect('/') // redirect usa-se em client server
   }
