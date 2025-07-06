@@ -1,7 +1,7 @@
 import { ChevronsUpDown, PlusCircle } from 'lucide-react'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 
+import { getCurrentOrg } from '@/auth/auth'
 import { getOrgazinations } from '@/http/get-organizations'
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
@@ -18,12 +18,12 @@ import {
 export async function OrganizationSwitcher() {
   const { organizations } = await getOrgazinations()
   // como é um sider component podemos acessar os cookies
-  const currentOrg = (await cookies()).get('org')
+  const currentOrg = await getCurrentOrg()
 
-  console.log('currentOrg', currentOrg?.value)
+  console.log('currentOrg', currentOrg)
 
   const currentOrganization = organizations.find(
-    (org) => org.slug === currentOrg?.value,
+    (org) => org.slug === currentOrg,
   )
 
   return (
