@@ -4,8 +4,10 @@ import { isAuthenticated } from '@/auth/auth'
 
 export default async function AppLayout({
   children,
+  sheet,
 }: Readonly<{
   children: React.ReactNode
+  sheet: React.ReactNode
 }>) {
   if (!(await isAuthenticated())) {
     // redirecionando caso tiver token nos cookies!!!
@@ -13,8 +15,9 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="space-y-4 py-4">
-      <main className="mx-auto w-full max-w-[1200px]">{children}</main>
-    </div>
+    <>
+      {children}
+      {sheet}
+    </>
   )
 }
