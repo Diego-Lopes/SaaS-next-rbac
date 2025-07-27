@@ -1,7 +1,8 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
-import { ThemeProvider } from 'next-themes'
+
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,13 +16,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br" suppressContentEditableWarning>
       <body className={`antialiased`}>
-        <ThemeProvider
-          attribute={'class'}
-          defaultTheme="dark"
-          disableTransitionOnChange // trocar a cor sem animação, ativa é troca bruta, seca.
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
