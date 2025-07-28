@@ -20,8 +20,6 @@ export async function OrganizationSwitcher() {
   // como é um sider component podemos acessar os cookies
   const currentOrg = await getCurrentOrg()
 
-  console.log('currentOrg', currentOrg)
-
   const currentOrganization = organizations.find(
     (org) => org.slug === currentOrg,
   )
@@ -31,7 +29,7 @@ export async function OrganizationSwitcher() {
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-[168px] items-center gap-2 text-sm font-medium outline-none focus-visible:ring-2">
         {currentOrganization ? (
           <>
-            <Avatar className="mr-2 size-4">
+            <Avatar className="size-4">
               {currentOrganization.avatarUrl && (
                 <AvatarImage src={currentOrganization.avatarUrl} />
               )}
