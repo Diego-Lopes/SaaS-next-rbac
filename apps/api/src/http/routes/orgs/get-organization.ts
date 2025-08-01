@@ -22,15 +22,17 @@ export async function getOrganization(app: FastifyInstance) {
           params: getOrganizationsSchema,
           response: {
             200: z.object({
-              id: z.string().uuid(),
-              name: z.string(),
-              slug: z.string(),
-              domain: z.string().nullable(),
-              shouldAttachUsersByDomain: z.boolean(),
-              avatarUrl: z.string().url().nullable(),
-              createdAt: z.date(),
-              updatedAt: z.date(),
-              ownerId: z.string().uuid(),
+              organization: z.object({
+                id: z.string().uuid(),
+                name: z.string(),
+                slug: z.string(),
+                domain: z.string().nullable(),
+                shouldAttachUsersByDomain: z.boolean(),
+                avatarUrl: z.string().url().nullable(),
+                createdAt: z.date(),
+                updatedAt: z.date(),
+                ownerId: z.string().uuid(),
+              }),
             }),
           },
         },
@@ -41,9 +43,7 @@ export async function getOrganization(app: FastifyInstance) {
         >
         const { organization } = await request.getUserMembership(slug)
 
-        return {
-          organization,
-        }
+        return { organization }
       },
     )
 }
