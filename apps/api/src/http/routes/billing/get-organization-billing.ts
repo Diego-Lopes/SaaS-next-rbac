@@ -17,7 +17,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .get(
-      '/organization/:slug/billing',
+      '/organizations/:slug/billing',
       {
         schema: {
           tags: ['billing'],
@@ -32,7 +32,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
                   unit: z.number(),
                   price: z.number(),
                 }),
-                project: z.object({
+                projects: z.object({
                   amount: z.number(),
                   unit: z.number(),
                   price: z.number(),
@@ -82,7 +82,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
               unit: 10,
               price: amountOfMembers * 10,
             },
-            project: {
+            projects: {
               amount: amountOfProjects,
               unit: 20,
               price: amountOfProjects * 20,
