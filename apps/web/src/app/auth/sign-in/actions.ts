@@ -31,7 +31,7 @@ export async function signInWithEmailAndPassword(data: FormData) {
       password,
     })
 
-    console.log(token)
+    // console.log(token)
     // setando token em cookie
     const cookie = await cookies()
     cookie.set('token', token, {

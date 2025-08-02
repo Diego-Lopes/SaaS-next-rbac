@@ -22,7 +22,6 @@ export async function getOrganization(org: string) {
       },
     })
     .json<GetOrganizationResponse>()
-  console.log(result)
 
   return result
 }
