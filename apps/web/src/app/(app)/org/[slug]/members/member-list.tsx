@@ -1,8 +1,10 @@
-import { Crown } from 'lucide-react'
+import { organizationSchema } from '@saas/auth'
+import { ArrowLeftRight, Crown } from 'lucide-react'
 import Image from 'next/image'
 
-import { getCurrentOrg } from '@/auth/auth'
+import { ability, getCurrentOrg } from '@/auth/auth'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { getMembers } from '@/http/get-members'
 import { getMembership } from '@/http/get-membership'
@@ -10,13 +12,16 @@ import { getOrganization } from '@/http/get-organization'
 
 export async function MemberList() {
   const currentOrg = await getCurrentOrg()
+  const permissions = await ability()
 
   const [{ members }, { membership }, { organization }] = await Promise.all([
     getMembers(currentOrg!),
     getMembership(currentOrg!),
     getOrganization(currentOrg!),
   ])
-  // vídeo time 02:59
+
+  const authOrganization = organizationSchema.parse(organization)
+
   return (
     <div className="space-y-2">
       <h2 className="text-lg font-semibold">Members</h2>
@@ -55,6 +60,19 @@ export async function MemberList() {
                       <span className="text-muted-foreground text-xs">
                         {member.email}
                       </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-2.5">
+                    <div className="flex items-center justify-end gap-2">
+                      {permissions?.can(
+                        'transfer_owership',
+                        authOrganization,
+                      ) && (
+                        <Button size={'sm'} variant={'ghost'}>
+                          <ArrowLeftRight className="mr2 size-4" />
+                          Transfer ownership
+                        </Button>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
