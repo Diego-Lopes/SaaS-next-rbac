@@ -30,7 +30,7 @@ export async function getInvites(app: FastifyInstance) {
               invites: z.array(
                 z.object({
                   id: z.string().uuid(),
-                  email: z.string().uuid(),
+                  email: z.string(),
                   role: roleSchema,
                   createdAt: z.date(),
                   author: z
@@ -79,6 +79,8 @@ export async function getInvites(app: FastifyInstance) {
             createdAt: 'desc',
           },
         })
+
+        console.log(invites)
 
         return { invites }
       },
