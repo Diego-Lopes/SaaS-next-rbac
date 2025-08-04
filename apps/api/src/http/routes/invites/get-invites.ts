@@ -80,8 +80,6 @@ export async function getInvites(app: FastifyInstance) {
           },
         })
 
-        console.log(invites)
-
         return { invites }
       },
     )
