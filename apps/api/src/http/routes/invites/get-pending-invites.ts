@@ -12,7 +12,7 @@ export async function getPendingInvites(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
-    .post(
+    .get(
       '/pending-invites',
       {
         schema: {
@@ -75,7 +75,7 @@ export async function getPendingInvites(app: FastifyInstance) {
             },
           },
           where: {
-            id: user.email,
+            email: user.email,
           },
         })
 

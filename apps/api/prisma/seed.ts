@@ -6,6 +6,7 @@ const prisma = new PrismaClient()
 
 async function seed() {
   await prisma.organization.deleteMany() // reset
+  await prisma.token.deleteMany() // reset
   await prisma.user.deleteMany() // reset
 
   const passwordHash = await hash('123456', 1) // round leve para rapidez
@@ -99,6 +100,22 @@ async function seed() {
             {
               userId: anotherUser2.id,
               role: 'MEMBER',
+            },
+          ],
+        },
+      },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user.id,
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: anotherUser.id,
             },
           ],
         },

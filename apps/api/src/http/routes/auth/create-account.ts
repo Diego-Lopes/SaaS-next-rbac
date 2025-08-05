@@ -25,7 +25,7 @@ export async function createAccount(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      console.log(request.body)
+      // console.log(request.body)
 
       const { name, email, password } = request.body as z.infer<
         typeof createAccountBodySchema
