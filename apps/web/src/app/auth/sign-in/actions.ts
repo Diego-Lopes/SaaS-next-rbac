@@ -5,6 +5,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
+import { acceptInvite } from '@/http/accept-invite'
 import { signInWithPassword } from '@/http/sign-in-with-password'
 
 const signInSchema = z.object({
@@ -38,6 +39,15 @@ export async function signInWithEmailAndPassword(data: FormData) {
       path: '/',
       maxAge: 60 * 60 * 24 * 7, // 7 dias.
     })
+
+    const inviteId = cookie.get('inviteId')?.value
+
+    if (inviteId) {
+      try {
+        await acceptInvite(inviteId)
+        cookie.delete('inviteId')
+      } catch (error) { }
+    }
   } catch (err) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json()
